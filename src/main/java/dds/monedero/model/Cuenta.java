@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import dds.monedero.exceptions.MaximaCantidadDepositosException;
 import dds.monedero.exceptions.MaximoExtraccionDiarioException;
@@ -76,9 +77,13 @@ public class Cuenta {
 
   public void chequearCantidadDepositos()
   {
-    if (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) {
+    if (sonDepositos(getMovimientos().stream()).count() >= 3) {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
+  }
+
+  public Stream<Movimiento> sonDepositos(Stream<Movimiento> movimientos) {
+    return movimientos.filter(movimiento -> movimiento.isDeposito());
   }
 
 }
