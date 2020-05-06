@@ -35,10 +35,8 @@ public class Cuenta {
 
   public void sacar(double cuanto) {
     chequearMontoNegativo(cuanto);
-
-    if (getSaldo() - cuanto < 0) {
-      throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
-    }
+    puedeSacar(cuanto);
+    
     double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now());
     double limite = 1000 - montoExtraidoHoy;
     if (cuanto > limite) {
@@ -84,6 +82,13 @@ public class Cuenta {
 
   public Stream<Movimiento> sonDepositos(Stream<Movimiento> movimientos) {
     return movimientos.filter(movimiento -> movimiento.isDeposito());
+  }
+
+  public void puedeSacar(double cuanto)
+  {
+    if (getSaldo() - cuanto < 0) {
+      throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
+    }
   }
 
 }
