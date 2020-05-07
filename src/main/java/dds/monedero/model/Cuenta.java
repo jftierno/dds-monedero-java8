@@ -102,8 +102,14 @@ public class Cuenta {
 
   public double getLimiteExtraccion() { return 1000-getMontoExtraidoA(LocalDate.now()); }
 
-  public void efectuarDeposito(MovimientoDeposito movimientoDeposito) { movimientosDepositos.add(movimientoDeposito); }
+  public void efectuarDeposito(MovimientoDeposito movimientoDeposito) {
+    setSaldo(movimientoDeposito.calcularValor(this));
+    movimientosDepositos.add(movimientoDeposito);
+  }
 
-  public void efectuarExtraccion(MovimientoExtraccion movimientoExtraccion) { movimientosExtracciones.add(movimientoExtraccion); }
+  public void efectuarExtraccion(MovimientoExtraccion movimientoExtraccion) {
+    setSaldo(movimientoExtraccion.calcularValor(this));
+    movimientosExtracciones.add(movimientoExtraccion);
+  }
 
 }

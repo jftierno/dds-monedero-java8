@@ -2,6 +2,7 @@ package dds.monedero.model;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Assert;
 
 import dds.monedero.exceptions.MaximaCantidadDepositosException;
 import dds.monedero.exceptions.MaximoExtraccionDiarioException;
