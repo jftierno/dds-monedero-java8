@@ -18,45 +18,65 @@ public class MonederoTest {
   }
 
   @Test
-  public void Poner() {
-    cuenta.poner(1500);
+  public void Depositar() {
+    cuenta.depositar(1500);
+    Assert.assertEquals(1500, cuenta.getSaldo(), 0.001);
   }
 
   @Test(expected = MontoNegativoException.class)
-  public void PonerMontoNegativo() {
-    cuenta.poner(-1500);
+  public void DepositarMontoNegativo() {
+    cuenta.depositar(-1500);
   }
 
   @Test
   public void TresDepositos() {
-    cuenta.poner(1500);
-    cuenta.poner(456);
-    cuenta.poner(1900);
+    cuenta.depositar(1500);
+    Assert.assertEquals(1500, cuenta.getSaldo(), 0.001);
+    cuenta.depositar(456);
+    Assert.assertEquals(1956, cuenta.getSaldo(), 0.001);
+    cuenta.depositar(1900);
+    Assert.assertEquals(3856, cuenta.getSaldo(), 0.001);
   }
 
   @Test(expected = MaximaCantidadDepositosException.class)
   public void MasDeTresDepositos() {
-    cuenta.poner(1500);
-    cuenta.poner(456);
-    cuenta.poner(1900);
-    cuenta.poner(245);
+    cuenta.depositar(1500);
+    Assert.assertEquals(1500, cuenta.getSaldo(), 0.001);
+    cuenta.depositar(456);
+    Assert.assertEquals(1956, cuenta.getSaldo(), 0.001);
+    cuenta.depositar(1900);
+    Assert.assertEquals(3856, cuenta.getSaldo(), 0.001);
+    cuenta.depositar(245);
+    Assert.assertEquals(4101, cuenta.getSaldo(), 0.001);
   }
 
   @Test(expected = SaldoMenorException.class)
   public void ExtraerMasQueElSaldo() {
     cuenta.setSaldo(90);
-    cuenta.sacar(1001);
+    cuenta.extraer(1001);
   }
 
   @Test(expected = MaximoExtraccionDiarioException.class)
   public void ExtraerMasDe1000() {
     cuenta.setSaldo(5000);
-    cuenta.sacar(1001);
+    cuenta.extraer(1001);
   }
 
   @Test(expected = MontoNegativoException.class)
   public void ExtraerMontoNegativo() {
-    cuenta.sacar(-500);
+    cuenta.extraer(-500);
+  }
+
+  @Test
+  public void TresExtracciones()
+  {
+    cuenta.setSaldo(5000);
+    cuenta.extraer(50);
+    Assert.assertEquals(4950, cuenta.getSaldo(), 0.001);
+    cuenta.extraer(456);
+    Assert.assertEquals(4494, cuenta.getSaldo(), 0.001);
+    cuenta.extraer(26);
+    Assert.assertEquals(4468, cuenta.getSaldo(), 0.001);
   }
 
 }
