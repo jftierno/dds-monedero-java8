@@ -93,12 +93,6 @@ public class Cuenta {
     }
   }
 
-  public double getLimiteExtraccion()
-  {
-    double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now());
-    double limite = 1000 - montoExtraidoHoy;
-
-    return limite;
-  }
+  public double getLimiteExtraccion() { return 1000-getMontoExtraidoA(LocalDate.now()); }
 
 }
