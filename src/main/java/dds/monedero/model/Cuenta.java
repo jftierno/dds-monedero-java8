@@ -69,12 +69,13 @@ public class Cuenta {
 
   public void chequearCantidadDepositos()
   {
-    if (sonDepositos(getMovimientos().stream()).count() >= 3) {
+    if (sonDepositosDe(LocalDate.now()).count() >= 3) {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
   }
 
-  public Stream<Movimiento> sonDepositos(Stream<Movimiento> movimientos) {
+  public Stream<Movimiento> sonDepositosDe(LocalDate fecha) {
+    Stream<Movimiento> movimientos = getMovimientos().stream();
     return movimientos.filter(movimiento -> movimiento.isDeposito());
   }
 
