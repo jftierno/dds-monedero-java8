@@ -44,8 +44,7 @@ public class Cuenta {
   public void agregarMovimiento(Movimiento movimiento) { movimientos.add(movimiento); }
 
   public double getMontoExtraidoA(LocalDate fecha) {
-    return getMovimientos().stream()
-        .filter(movimiento -> !movimiento.isDeposito() && movimiento.esDeLaFecha(fecha))
+    return sonExtraccionesDe(fecha)
         .mapToDouble(Movimiento::getMonto)
         .sum();
   }
@@ -94,5 +93,10 @@ public class Cuenta {
   }
 
   public double getLimiteExtraccion() { return 1000-getMontoExtraidoA(LocalDate.now()); }
+
+  public Stream<Movimiento> sonExtraccionesDe(LocalDate fecha) {
+    Stream<Movimiento> movimientos = getMovimientos().stream();
+    return movimientos.filter(movimiento -> !movimiento.isDeposito() && movimiento.esDeLaFecha(fecha));
+  }
 
 }
